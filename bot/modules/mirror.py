@@ -134,15 +134,15 @@ class MirrorListener(listeners.MirrorListeners):
 
     def onUploadComplete(self, link: str):
         with download_dict_lock:
-            msg = f'<b>FileName</b>: {download_dict[self.uid].name()}\n <b>Size</b>:({download_dict[self.uid].size()})\n <b>GdriveLink 🔗</b>: {link}'
+            msg = f'<b>FileName</b>: {download_dict[self.uid].name()}\n\n<b>Size</b>:{download_dict[self.uid].size()}\n<b>GdriveLink 🔗</b>: {link}'
             LOGGER.info(f'Done Uploading {download_dict[self.uid].name()}')
             if INDEX_URL is not None:
                 share_url = requests.utils.requote_uri(f'{INDEX_URL}/{download_dict[self.uid].name()}')
                 if os.path.isdir(f'{DOWNLOAD_DIR}/{self.uid}/{download_dict[self.uid].name()}'):
                     share_url += '/'
-                msg += f'\n\n <b>Shareable link 🔗</b>: {share_url}\n\n <b>POWERED BY LOLBOTZ</b> '
+                msg += f'\n\n<b>Shareable link 🔗</b>: {share_url}\n\n<b>POWERED BY LOLBOTZ</b> '
             if self.tag is not None:
-                msg += f'\ncc: @{self.tag}'
+                msg += f'\n<b>COPYRIGHT</b>: @{self.tag}'
             try:
                 fs_utils.clean_download(download_dict[self.uid].path())
             except FileNotFoundError:
